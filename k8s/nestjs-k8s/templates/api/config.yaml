@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: nestjs-k8s
+data:
+  # DB Config (excluding sensitive DB credentials)
+  DB_CONNECTION: "postgres"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_DATABASE: "nestjs-k8s"
+
+  # API KEY Config (excluding the API key value)
+  API_KEY_ENABLED: "true"
+  API_KEY_NAME: "x-api-key"
+  API_KEY_PREFIX: "app"
+
+  # API DOC (Swagger) Config
+  API_DOC_ENABLED: "true"
+  API_DOC_PATH: "/doc"
+  API_DOC_USER: "developer"

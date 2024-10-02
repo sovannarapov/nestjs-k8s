@@ -1,0 +1,25 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'us-central1-docker.pkg.dev/nestjs-k8s-436002/nestjs-k8s/production',
+      '.'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/nestjs-k8s-436002/nestjs-k8s/production']
+
+  - name: 'gcr.io/$PROJECT_ID/helm:3.15.4'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=gcp-nestjs-k8s'
+    args: [
+      'upgrade',
+      'nestjs-k8s',
+      'k8s/nestjs-k8s',
+      '--namespace',
+      'nestjs-k8s',
+      '--install'
+    ]
