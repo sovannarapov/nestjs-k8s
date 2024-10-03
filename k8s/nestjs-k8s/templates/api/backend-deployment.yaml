@@ -15,6 +15,7 @@ spec:
       name: backend
       labels:
         app: backend
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: nestjs-k8s-backend
