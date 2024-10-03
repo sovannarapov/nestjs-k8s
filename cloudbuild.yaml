@@ -1,3 +1,6 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
@@ -23,6 +26,3 @@ steps:
       'nestjs-k8s',
       '--install'
     ]
-
-options:
-  logging: CLOUD_LOGGING_ONLY
