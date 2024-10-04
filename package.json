@@ -2,9 +2,9 @@
   "name": "nestjs-k8s",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Sovannara Pov <sovannarapov9@gmail.com>",
   "private": true,
-  "license": "Sovannara Pov [sovannarapov9@gmail.com]",
+  "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
