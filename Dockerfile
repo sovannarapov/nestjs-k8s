@@ -1,4 +1,4 @@
-FROM node:alpine as dev-stage
+FROM node:alpine AS dev-stage
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -18,7 +18,7 @@ COPY . .
 # build app
 RUN yarn build
 
-FROM node:alpine as  prod-stage
+FROM node:alpine AS prod-stage
 
 # Create app directory
 RUN mkdir -p /usr/src/app
