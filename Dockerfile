@@ -1,20 +1,3 @@
-#FROM node:alpine
-#
-#WORKDIR /usr/src/app
-#
-#COPY package.json ./
-#COPY yarn.lock ./
-#
-#RUN yarn install --frozen-lockfile && yarn cache clean
-#
-#EXPOSE 3000
-#
-#COPY . .
-#
-#RUN yarn build
-#
-#CMD ["yarn", "start:prod"]
-
 FROM node:alpine as dev-stage
 
 # Create app directory
@@ -24,8 +7,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install --frozen-lockfile && yarn cache clean
@@ -45,8 +27,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install --only=production
