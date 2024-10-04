@@ -70,7 +70,7 @@ async function bootstrap() {
       persistAuthorization: true,
     },
   };
-  SwaggerModule.setup('docs', app, document, options);
+  SwaggerModule.setup(path, app, document, options);
 
   await app.listen(3000);
 }
