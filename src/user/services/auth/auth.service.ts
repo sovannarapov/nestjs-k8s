@@ -38,7 +38,7 @@ export class AuthService {
       const user = this.classMapper.map(dto, RegisterDto, User);
       const hash = await argon.hash(dto.password);
       return this.classMapper.mapAsync(
-        await this.userRepo.save({ ...user, hash: hash }),
+        await this.userRepo.save({ ...user, password: hash }),
         User,
         UserDto,
       );
@@ -62,13 +62,13 @@ export class AuthService {
       select: {
         id: true,
         email: true,
-        hash: true,
+        password: true,
       },
     });
 
     if (!user) throw new NotFoundException('Invalid username and password');
 
-    const passwordMatch = await argon.verify(user.hash, dto.password);
+    const passwordMatch = await argon.verify(user.password, dto.password);
     if (!passwordMatch)
       throw new UnauthorizedException('Invalid username and password');
 
@@ -142,7 +142,7 @@ export class AuthService {
 
       return this.classMapper.mapAsync(
         await this.userRepo.save({
-          hash,
+          password: hash,
           id: userId,
           ...rest,
         }),
@@ -154,7 +154,7 @@ export class AuthService {
     return this.classMapper.mapAsync(
       await this.userRepo.save({
         id: userId,
-        hash: userData.hash,
+        password: userData.password,
         ...dto,
       }),
       User,
