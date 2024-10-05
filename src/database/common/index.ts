@@ -1,3 +1,4 @@
+export * from './constant';
 export * from './constraint.migration';
 export * from './default.migration';
 export * from './helper';
