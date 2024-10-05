@@ -104,7 +104,11 @@ export class UserService {
       const hash = await argon.hash(updateUserDto.password);
       return Response.data(
         await this.classMapper.mapAsync(
-          await this.userRepo.save({ id: userId, ...updateModel, hash: hash }),
+          await this.userRepo.save({
+            id: userId,
+            ...updateModel,
+            password: hash,
+          }),
           User,
           UserDto,
         ),
