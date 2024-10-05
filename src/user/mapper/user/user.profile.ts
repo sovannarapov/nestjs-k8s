@@ -20,10 +20,10 @@ export class UserProfile extends AutomapperProfile {
   }
 
   override get profile() {
-    return (mapper) => {
-      // model to dto
+    return (mapper: Mapper) => {
+      // entity to dto
       createMap(mapper, User, UserDto);
-      //dto to model
+      // dto to entity
       createMap(
         mapper,
         RegisterDto,
@@ -50,7 +50,7 @@ export class UserProfile extends AutomapperProfile {
         ),
         forMember(
           (dest) => dest.updatedAt,
-          mapFrom((p) => new Date()),
+          mapFrom(() => new Date()),
         ),
       );
       createMap(
@@ -59,7 +59,7 @@ export class UserProfile extends AutomapperProfile {
         User,
         forMember(
           (dest) => dest.updatedAt,
-          mapFrom((p) => new Date()),
+          mapFrom(() => new Date()),
         ),
       );
     };
