@@ -29,7 +29,7 @@ export class User {
   email: string;
 
   @Column({ select: false })
-  hash: string;
+  password: string;
 
   @AutoMap()
   @Column({ default: true })
