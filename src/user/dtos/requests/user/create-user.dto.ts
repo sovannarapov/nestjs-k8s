@@ -7,23 +7,28 @@ import {
   IsStrongPassword,
 } from 'class-validator';
 import { Match } from '../../../../global/decorator/password/match.decorator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateUserDto {
+  @ApiProperty()
   @AutoMap()
   @IsString()
   @IsNotEmpty()
   firstName: string;
 
+  @ApiProperty()
   @AutoMap()
   @IsString()
   @IsNotEmpty()
   lastName: string;
 
+  @ApiProperty()
   @AutoMap()
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @ApiProperty()
   @IsString()
   @IsStrongPassword({
     minLength: 8,
@@ -34,6 +39,8 @@ export class CreateUserDto {
   })
   @IsNotEmpty()
   password: string;
+
+  @ApiProperty()
   @IsString()
   @IsStrongPassword({
     minLength: 8,
@@ -46,6 +53,7 @@ export class CreateUserDto {
   @Match('password')
   confirmPassword: string;
 
+  @ApiPropertyOptional()
   @IsOptional()
   roles?: string[];
 }
