@@ -19,7 +19,11 @@ spec:
         - name: postgres-deployment
           image: postgres:13-alpine
           ports:
-            - containerPort: 5432
+            - containerPort:
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: DB_PORT
           env:
             - name: POSTGRES_USER
               valueFrom:
