@@ -14,7 +14,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RoleService } from '../../services/role/role.service';
 import { PermissionGuard } from '../../securities/permissions.security';
 import { Permissions } from '../../decorators';
@@ -31,8 +31,12 @@ export class RoleController {
 
   @Permissions('role::read')
   @UseGuards(PermissionGuard)
-  @Get('page')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: Response<Pagination<RoleDto>>,
+    description: 'Get all role with pagination',
+  })
+  @Get('page')
   async getAllRoleWithPagination(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) size: number = 10,
@@ -44,22 +48,35 @@ export class RoleController {
 
   @Permissions('role::read')
   @UseGuards(PermissionGuard)
-  @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: Response<RoleDto[]>,
+    description: 'Get all the roles',
+  })
+  @Get()
   getAllRoles(): Promise<Response<RoleDto[]>> {
     return this.roleService.getAllRoles();
   }
 
   @Permissions('role::read')
   @UseGuards(PermissionGuard)
-  @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: Response<RoleDto>,
+    description: 'Get the role by id',
+  })
+  @Get(':id')
   getRoleById(@Param('id') id: string): Promise<Response<RoleDto>> {
     return this.roleService.getRoleById(id);
   }
 
   @Permissions('role::write')
   @UseGuards(PermissionGuard)
+  @HttpCode(HttpStatus.CREATED)
+  @ApiResponse({
+    type: Response<RoleDto>,
+    description: 'Create a new role',
+  })
   @Post()
   createRole(@Body() createRoleDto: CreateRoleDto): Promise<Response<RoleDto>> {
     return this.roleService.createRole(createRoleDto);
@@ -67,6 +84,10 @@ export class RoleController {
 
   @Permissions('role::update')
   @UseGuards(PermissionGuard)
+  @ApiResponse({
+    type: Response<RoleDto>,
+    description: 'Update the role by id',
+  })
   @Patch(':id')
   updateRole(
     @Param('id') id: string,
@@ -78,6 +99,9 @@ export class RoleController {
   @Permissions('role::delete')
   @UseGuards(PermissionGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiResponse({
+    description: 'Delete the role by id',
+  })
   @Delete(':id')
   async deleteRoleById(@Param('id') id: string): Promise<Response<string>> {
     await this.roleService.deleteRoleById(id);
