@@ -75,11 +75,14 @@ export class RoleService {
   public async createRole(
     createRoleDto: CreateRoleDto,
   ): Promise<Response<RoleDto>> {
+    const role = this.classMapper.map(createRoleDto, CreateRoleDto, Role);
+
     return Response.data(
       await this.classMapper.mapAsync(
-        await this.roleRepo.save(
-          this.classMapper.map(createRoleDto, CreateRoleDto, Role),
-        ),
+        await this.roleRepo.save({
+          ...role,
+          createdAt: new Date(),
+        }),
         Role,
         RoleDto,
       ),
