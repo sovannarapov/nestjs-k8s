@@ -4,6 +4,9 @@ metadata:
   name: config
   namespace: nestjs-k8s
 data:
+  # App Config
+  APP_PORT: "3000"
+
   # DB Config (excluding sensitive DB credentials)
   DB_CONNECTION: "postgres"
   DB_HOST: "postgres-service"
