@@ -14,7 +14,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PermissionService } from '../../services/permission/permission.service';
 import { PermissionGuard } from '../../securities/permissions.security';
 import { Permissions } from '../../decorators';
@@ -31,8 +31,12 @@ export class PermissionController {
 
   @Permissions('permission::read')
   @UseGuards(PermissionGuard)
-  @Get('page')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: Response<PermissionDto>,
+    description: 'Get all permission with pagination',
+  })
+  @Get('page')
   async getAllPermissionWithPagination(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) size: number = 10,
@@ -44,22 +48,34 @@ export class PermissionController {
 
   @Permissions('permission::read')
   @UseGuards(PermissionGuard)
-  @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: Response<PermissionDto[]>,
+    description: 'Get all the permissions',
+  })
+  @Get()
   getAllPermissions(): Promise<Response<PermissionDto[]>> {
     return this.permissionService.getAllPermissions();
   }
 
   @Permissions('permission::read')
   @UseGuards(PermissionGuard)
-  @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: Response<PermissionDto>,
+    description: 'Get the permission by id',
+  })
+  @Get(':id')
   getPermissionById(@Param('id') id: string): Promise<Response<PermissionDto>> {
     return this.permissionService.getPermissionById(id);
   }
 
   @Permissions('permission::write')
   @UseGuards(PermissionGuard)
+  @ApiResponse({
+    type: Response<PermissionDto>,
+    description: 'Create a new permission',
+  })
   @Post()
   createPermission(
     @Body() createPermissionDto: CreatePermissionDto,
@@ -69,6 +85,10 @@ export class PermissionController {
 
   @Permissions('permission::update')
   @UseGuards(PermissionGuard)
+  @ApiResponse({
+    type: Response<PermissionDto>,
+    description: 'Update the permission by id',
+  })
   @Patch(':id')
   updatePermission(
     @Param('id') id: string,
@@ -80,6 +100,9 @@ export class PermissionController {
   @Permissions('permission::delete')
   @UseGuards(PermissionGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiResponse({
+    description: 'Delete the permission by id',
+  })
   @Delete(':id')
   async deletePermissionById(
     @Param('id') id: string,
