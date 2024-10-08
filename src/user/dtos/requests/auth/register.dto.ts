@@ -11,26 +11,26 @@ import { Match } from '../../../../global/decorator/password/match.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'John' })
   @AutoMap()
   @IsString()
   @IsNotEmpty()
   firstName: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Doe' })
   @AutoMap()
   @IsString()
   @IsNotEmpty()
   lastName: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'john@gmail.com' })
   @AutoMap()
   @IsEmail()
   @IsNotEmpty()
   @Unique(User)
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'P@ssw0rd' })
   @IsString()
   @IsStrongPassword({
     minLength: 8,
@@ -42,7 +42,7 @@ export class RegisterDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'P@ssw0rd' })
   @IsString()
   @IsStrongPassword({
     minLength: 8,
