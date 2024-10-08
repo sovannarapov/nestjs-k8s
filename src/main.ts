@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { initializeTransactionalContext } from 'typeorm-transactional';
-import { VersioningType } from '@nestjs/common';
+import { Logger, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import * as basicAuth from 'express-basic-auth';
@@ -72,6 +72,8 @@ async function bootstrap() {
   };
   SwaggerModule.setup(path, app, document, options);
 
-  await app.listen(3000);
+  await app.listen(process.env.APP_PORT);
+
+  Logger.log(`The application is running on port ${process.env.APP_PORT}`);
 }
 bootstrap();
