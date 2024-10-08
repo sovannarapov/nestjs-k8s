@@ -21,11 +21,7 @@ spec:
           image: us-central1-docker.pkg.dev/nestjs-k8s-436002/nestjs-k8s/production:latest
           imagePullPolicy: Always
           ports:
-            - containerPort:
-              valueFrom:
-                configMapKeyRef:
-                  name: config
-                  key: APP_PORT
+            - containerPort: 3000
           envFrom:
             - configMapRef:
                 name: config
