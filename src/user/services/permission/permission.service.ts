@@ -63,15 +63,18 @@ export class PermissionService {
   public async createPermission(
     createPermissionDto: CreatePermissionDto,
   ): Promise<Response<PermissionDto>> {
+    const permission = this.classMapper.map(
+      createPermissionDto,
+      CreatePermissionDto,
+      Permission,
+    );
+
     return Response.data(
       await this.classMapper.mapAsync(
-        await this.permissionRepo.save(
-          this.classMapper.map(
-            createPermissionDto,
-            CreatePermissionDto,
-            Permission,
-          ),
-        ),
+        await this.permissionRepo.save({
+          ...permission,
+          createdAt: new Date(),
+        }),
         Permission,
         PermissionDto,
       ),
