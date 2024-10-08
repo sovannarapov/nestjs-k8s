@@ -78,11 +78,14 @@ export class UserService {
   public async createUser(
     createUserDto: CreateUserDto,
   ): Promise<Response<UserDto>> {
+    const user = this.classMapper.map(createUserDto, CreateUserDto, User);
+
     return Response.data(
       await this.classMapper.mapAsync(
-        await this.userRepo.save(
-          this.classMapper.map(createUserDto, CreateUserDto, User),
-        ),
+        await this.userRepo.save({
+          ...user,
+          createdAt: new Date(),
+        }),
         User,
         UserDto,
       ),
