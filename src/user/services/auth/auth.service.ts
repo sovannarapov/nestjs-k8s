@@ -20,6 +20,7 @@ import {
   refreshTokenConfig,
 } from '../../../global/config';
 import { UpdateProfileDto } from '../../dtos/requests/auth/update-profile.dto';
+import { LoginResponseDto } from '@/user/dtos/responses/auth/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,28 +34,32 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async register(dto: RegisterDto): Promise<UserDto> {
+  public async register(registerDto: RegisterDto): Promise<UserDto> {
     try {
-      const user = this.classMapper.map(dto, RegisterDto, User);
-      const hash = await argon.hash(dto.password);
+      const user = this.classMapper.map(registerDto, RegisterDto, User);
+      const hash = await argon.hash(registerDto.password);
+
       return this.classMapper.mapAsync(
-        await this.userRepo.save({ ...user, password: hash }),
+        await this.userRepo.save({
+          ...user,
+          password: hash,
+          createdAt: new Date(),
+        }),
         User,
         UserDto,
       );
     } catch (error) {
       if (error instanceof QueryFailedError) {
-        throw new ForbiddenException(`Email ${dto.email} is already in use`);
+        throw new ForbiddenException(
+          `Email ${registerDto.email} is already in use`,
+        );
       }
 
       throw error;
     }
   }
 
-  public async signin(dto: SigninDto): Promise<{
-    access_token: string;
-    refresh_token: string;
-  }> {
+  public async signin(dto: SigninDto): Promise<LoginResponseDto> {
     const user = await this.userRepo.findOne({
       where: {
         email: dto.email,
@@ -163,7 +168,7 @@ export class AuthService {
   }
 
   public async signout(user: UserDto): Promise<void> {
-    await this.refreshTokenRepo.delete({ user });
+    await this.refreshTokenRepo.delete(user);
   }
 
   public generateJWT(payload: Payload, config: JwtConfig): string {
