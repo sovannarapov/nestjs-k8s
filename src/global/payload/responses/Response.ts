@@ -19,7 +19,7 @@ export class Response<T> {
   private statusCode: number;
   private metadata: Metadata;
 
-  public static ok<T>(): Response<string> {
+  public static ok<T>(): Response<T | string> {
     return new Response('Successfully', 200, new Metadata());
   }
 
