@@ -39,13 +39,33 @@ export class Role {
   updatedAt: Date;
 
   @ManyToMany(() => User, (user) => user.roles)
-  @JoinTable()
+  @JoinTable({
+    name: 'users_roles',
+    joinColumn: {
+      name: 'userId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'roleId',
+      referencedColumnName: 'id',
+    },
+  })
   users: User[];
 
   @AutoMap(() => PermissionDto)
   @ManyToMany(() => Permission, (permission) => permission.roles, {
     cascade: true,
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'permissions_roles',
+    joinColumn: {
+      name: 'permissionId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'roleId',
+      referencedColumnName: 'id',
+    },
+  })
   permissions: Permission[];
 }
