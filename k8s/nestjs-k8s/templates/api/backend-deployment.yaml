@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: api-deployment
   namespace: nestjs-k8s
   labels:
-    app: backend
+    app: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: api
   template:
     metadata:
-      name: backend
+      name: api
       labels:
-        app: backend
+        app: api
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
-        - name: nestjs-k8s-backend
+        - name: api-deployment
           image: us-central1-docker.pkg.dev/nestjs-k8s-436002/nestjs-k8s/production:latest
           imagePullPolicy: Always
           ports:

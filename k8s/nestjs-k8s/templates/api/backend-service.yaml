@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: api-service
   namespace: nestjs-k8s
   labels:
-    app: backend
+    app: api
 spec:
   selector:
-    app: backend
+    app: api
   ports:
     - protocol: TCP
       port: 80
