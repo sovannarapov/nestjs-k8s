@@ -4,7 +4,7 @@ metadata:
   name: api
   namespace: nestjs-k8s
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api
@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: api
-        date: {{ now | unixEpoch }}
+        date: "{{ now | unixEpoch }}"
       name: api
     spec:
       containers:

@@ -4,7 +4,7 @@ metadata:
   name: postgres-database
   namespace: nestjs-k8s
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: postgres-database
