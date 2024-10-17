@@ -16,7 +16,6 @@ spec:
       name: api
     spec:
       containers:
-        - name: api
         - envFrom:
             - configMapRef:
                 name: config
