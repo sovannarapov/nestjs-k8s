@@ -15,7 +15,11 @@ spec:
       name: postgres-database
     spec:
       containers:
-        - env:
+        - name: postgres-database
+          image: postgres:13-alpine
+          ports:
+            - containerPort: 5432
+          env:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -31,7 +35,3 @@ spec:
                 configMapKeyRef:
                   key: DB_DATABASE
                   name: config
-          image: postgres:13-alpine
-          name: postgres-database
-          ports:
-            - containerPort: 5432

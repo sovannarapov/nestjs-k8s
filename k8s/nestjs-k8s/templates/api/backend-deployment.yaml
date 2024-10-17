@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: api
   namespace: nestjs-k8s
+  labels:
+    app: api
 spec:
   replicas: 1
   selector:
@@ -10,20 +12,20 @@ spec:
       app: api
   template:
     metadata:
+      name: api
       labels:
         app: api
         date: "{{ now | unixEpoch }}"
-      name: api
     spec:
       containers:
-        - envFrom:
+        - name: api
+          image: us-central1-docker.pkg.dev/nestjs-k8s-devops/nestjs-k8s-devops/production:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
             - configMapRef:
                 name: config
             - secretRef:
                 name: secret
-          image: us-central1-docker.pkg.dev/nestjs-k8s-devops/nestjs-k8s-devops/production:latest
-          imagePullPolicy: Always
-          name: api
-          ports:
-            - containerPort: 3000
       restartPolicy: Always

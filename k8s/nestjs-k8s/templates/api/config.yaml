@@ -1,21 +1,21 @@
 apiVersion: v1
-data:
-  # API DOC (Swagger) Config
-  API_DOC_ENABLED: 'true'
-  API_DOC_PATH: /doc
-  API_DOC_USER: developer
-  # API KEY Config (excluding the API key value)
-  API_KEY_ENABLED: 'true'
-  API_KEY_NAME: x-api-key
-  API_KEY_PREFIX: app
-  # App Config
-  APP_PORT: '3000'
-  # DB Config (excluding sensitive DB credentials)
-  DB_CONNECTION: postgres
-  DB_DATABASE: nestjs-k8s
-  DB_HOST: postgres-service
-  DB_PORT: '5432'
 kind: ConfigMap
 metadata:
   name: config
   namespace: nestjs-k8s
+data:
+  # API DOC (Swagger) Config
+  API_DOC_ENABLED: "true"
+  API_DOC_PATH: "/doc"
+  API_DOC_USER: "developer"
+  # API KEY Config (excluding the API key value)
+  API_KEY_ENABLED: "true"
+  API_KEY_NAME: "x-api-key"
+  API_KEY_PREFIX: "app"
+  # App Config
+  APP_PORT: "3000"
+  # DB Config (excluding sensitive DB credentials)
+  DB_CONNECTION: "postgres"
+  DB_DATABASE: "nestjs-k8s"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
