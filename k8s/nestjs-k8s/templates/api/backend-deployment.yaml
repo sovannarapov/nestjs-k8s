@@ -24,6 +24,7 @@ spec:
                 name: secret
           image: us-central1-docker.pkg.dev/nestjs-k8s-436002/nestjs-k8s/production:latest
           imagePullPolicy: Always
+          name: api
           ports:
             - containerPort: 3000
       restartPolicy: Always
