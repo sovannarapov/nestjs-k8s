@@ -22,7 +22,7 @@ spec:
                 name: config
             - secretRef:
                 name: secret
-          image: us-central1-docker.pkg.dev/nestjs-k8s-436002/nestjs-k8s/production:latest
+          image: us-central1-docker.pkg.dev/nestjs-k8s-devops/nestjs-k8s-devops/production:latest
           imagePullPolicy: Always
           name: api
           ports:
