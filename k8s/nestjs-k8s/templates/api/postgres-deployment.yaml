@@ -12,7 +12,6 @@ spec:
     metadata:
       labels:
         app: postgres-database
-      name: postgres-database
     spec:
       containers:
         - name: postgres-database
@@ -23,15 +22,15 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  key: DB_USERNAME
                   name: secret
+                  key: DB_USERNAME
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: DB_PASSWORD
                   name: secret
+                  key: DB_PASSWORD
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  key: DB_DATABASE
                   name: config
+                  key: DB_DATABASE

@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: api
   name: api-service
   namespace: nestjs-k8s
+  labels:
+    app: api
 spec:
-  ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 3000
   selector:
     app: api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
